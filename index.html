@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swara Kakaraparthy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16233F;
+    --paper:#FAF9F6;
+    --paper-dim:#F1EFE9;
+    --teal:#4C7A6D;
+    --amber:#C9962E;
+    --text:#2A2E35;
+    --text-soft:#5B6270;
+    --line:#DEDAD0;
+    --display: 'Fraunces', serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--paper);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  ::selection{ background:var(--amber); color:var(--ink); }
+
+  :focus-visible{
+    outline:2px solid var(--teal);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(250,249,246,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 0;
+  }
+
+  .nav-name{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.05rem;
+    letter-spacing:0.01em;
+  }
+
+  .nav-links{
+    display:flex;
+    gap:28px;
+    font-size:0.85rem;
+    font-weight:500;
+    color:var(--text-soft);
+  }
+
+  .nav-links a{ transition:color 0.2s ease; position:relative; }
+  .nav-links a:hover{ color:var(--ink); }
+
+  .nav-links a::after{
+    content:'';
+    position:absolute;
+    left:0; bottom:-4px;
+    width:0; height:1.5px;
+    background:var(--teal);
+    transition:width 0.25s ease;
+  }
+  .nav-links a:hover::after{ width:100%; }
+
+  @media (max-width:640px){
+    .nav-links{ gap:16px; font-size:0.78rem; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:96px 0 88px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:0.78rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--teal);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+  }
+
+  .eyebrow::before{
+    content:'';
+    width:26px; height:1px;
+    background:var(--teal);
+  }
+
+  h1{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:clamp(2.4rem, 5.5vw, 3.6rem);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+    max-width:11ch;
+  }
+
+  .hero-sub{
+    margin-top:26px;
+    font-size:1.08rem;
+    color:var(--text-soft);
+    max-width:52ch;
+  }
+
+  .hero-meta{
+    margin-top:36px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px 28px;
+    font-family:var(--mono);
+    font-size:0.82rem;
+    color:var(--text-soft);
+  }
+
+  .hero-meta a{
+    border-bottom:1px solid var(--line);
+    padding-bottom:2px;
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .hero-meta a:hover{ color:var(--ink); border-color:var(--ink); }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{
+    padding:76px 0;
+    border-bottom:1px solid var(--line);
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom:40px;
+  }
+
+  .section-num{
+    font-family:var(--mono);
+    font-size:0.8rem;
+    color:var(--amber);
+  }
+
+  .section-head h2{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:1.7rem;
+    color:var(--ink);
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- ABOUT ---------- */
+  .about-text{
+    max-width:62ch;
+    font-size:1.02rem;
+    color:var(--text);
+  }
+  .about-text p + p{ margin-top:16px; }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px 32px;
+  }
+
+  @media (max-width:640px){
+    .skills-grid{ grid-template-columns:1fr; }
+  }
+
+  .skill-item{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+
+  .skill-mark{
+    font-family:var(--mono);
+    font-size:0.75rem;
+    color:var(--teal);
+    margin-top:3px;
+  }
+
+  .skill-title{
+    font-weight:600;
+    font-size:0.95rem;
+    color:var(--ink);
+  }
+
+  .skill-desc{
+    font-size:0.88rem;
+    color:var(--text-soft);
+    margin-top:2px;
+  }
+
+  /* ---------- EXPERIENCE TIMELINE ---------- */
+  .timeline{
+    position:relative;
+    padding-left:28px;
+  }
+
+  .timeline::before{
+    content:'';
+    position:absolute;
+    left:5px; top:6px; bottom:6px;
+    width:1.5px;
+    background:var(--line);
+  }
+
+  .tl-item{
+    position:relative;
+    padding-bottom:44px;
+  }
+  .tl-item:last-child{ padding-bottom:0; }
+
+  .tl-dot{
+    position:absolute;
+    left:-28px; top:5px;
+    width:11px; height:11px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2px solid var(--teal);
+  }
+
+  .tl-item.current .tl-dot{
+    background:var(--teal);
+    box-shadow:0 0 0 4px rgba(76,122,109,0.15);
+  }
+
+  .tl-dates{
+    font-family:var(--mono);
+    font-size:0.76rem;
+    color:var(--amber);
+    letter-spacing:0.02em;
+  }
+
+  .tl-role{
+    font-family:var(--display);
+    font-size:1.18rem;
+    font-weight:500;
+    color:var(--ink);
+    margin-top:4px;
+  }
+
+  .tl-org{
+    font-size:0.92rem;
+    color:var(--text-soft);
+    margin-top:2px;
+    margin-bottom:12px;
+  }
+
+  .tl-item ul{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+  }
+
+  .tl-item li{
+    font-size:0.93rem;
+    color:var(--text);
+    padding-left:16px;
+    position:relative;
+  }
+
+  .tl-item li::before{
+    content:'—';
+    position:absolute;
+    left:0;
+    color:var(--line);
+  }
+
+  /* ---------- EDUCATION ---------- */
+  .edu-list{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+  }
+
+  .edu-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:6px 20px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .edu-item:last-child{ border-bottom:none; padding-bottom:0; }
+
+  .edu-school{
+    font-family:var(--display);
+    font-size:1.15rem;
+    font-weight:500;
+    color:var(--ink);
+  }
+
+  .edu-loc{
+    font-size:0.88rem;
+    color:var(--text-soft);
+    margin-top:3px;
+  }
+
+  .edu-date{
+    font-family:var(--mono);
+    font-size:0.8rem;
+    color:var(--text-soft);
+    white-space:nowrap;
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-section{ border-bottom:none; }
+
+  .contact-inner{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:28px;
+  }
+
+  .contact-inner h2{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:2rem;
+    color:var(--ink);
+    max-width:14ch;
+  }
+
+  .contact-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+
+  .contact-link{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 20px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    font-size:0.92rem;
+    font-weight:500;
+    background:var(--paper-dim);
+    transition:border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .contact-link:hover{
+    border-color:var(--teal);
+    transform:translateY(-2px);
+  }
+
+  .contact-link .tag{
+    font-family:var(--mono);
+    font-size:0.72rem;
+    color:var(--teal);
+  }
+
+  footer{
+    padding:32px 0 48px;
+    font-family:var(--mono);
+    font-size:0.76rem;
+    color:var(--text-soft);
+    display:flex;
+    justify-content:space-between;
+  }
+
+  @media (max-width:640px){
+    .hero{ padding:64px 0 56px; }
+    section{ padding:56px 0; }
+    .wrap{ padding:0 22px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="nav-name">Swara Kakaraparthy</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Community Outreach &amp; Youth Leadership</div>
+    <h1>Building relationships that move programs forward.</h1>
+    <p class="hero-sub">I'm a rising college student at American University with three years of experience organizing community programs, mentoring young people, and building partnerships between organizations and the people they serve.</p>
+    <div class="hero-meta">
+      <a href="mailto:swarakakaraparthy@gmail.com">swarakakaraparthy@gmail.com</a>
+      <a href="tel:4439789100">443-978-9100</a>
+      <span>Marriottsville, MD</span>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">01</span>
+      <h2>About</h2>
+    </div>
+    <div class="about-text reveal">
+      <p>I work at the intersection of community and organization — researching partners, coordinating events, and mentoring participants so programs run well and reach the people they're meant for. Across roles in nonprofit outreach, youth coaching, and retail, the throughline has been the same: listen carefully, communicate clearly, and follow through.</p>
+      <p>I'm heading into my freshman year at The American University in Washington, DC, and looking for an internship where I can keep building on that foundation — in community engagement, program coordination, or a related field.</p>
+      <p>Outside of work, you'll usually find me on the golf course, baking something in the kitchen, or with my nose in a book. I love spending time with friends and I'm always down to try something new — a lot of what I've ended up doing professionally just started as things I genuinely enjoyed.</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">02</span>
+      <h2>Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-item reveal">
+        <span class="skill-mark">01</span>
+        <div>
+          <div class="skill-title">Community Outreach</div>
+          <div class="skill-desc">Researching partners, cultivating stakeholder relationships, and expanding program visibility.</div>
+        </div>
+      </div>
+      <div class="skill-item reveal">
+        <span class="skill-mark">02</span>
+        <div>
+          <div class="skill-title">Event &amp; Program Coordination</div>
+          <div class="skill-desc">Supporting clinics, tournaments, and community events from planning through day-of operations.</div>
+        </div>
+      </div>
+      <div class="skill-item reveal">
+        <span class="skill-mark">03</span>
+        <div>
+          <div class="skill-title">Mentorship &amp; Youth Leadership</div>
+          <div class="skill-desc">Coaching and guiding younger participants, building trust with students and families alike.</div>
+        </div>
+      </div>
+      <div class="skill-item reveal">
+        <span class="skill-mark">04</span>
+        <div>
+          <div class="skill-title">Stakeholder Communication</div>
+          <div class="skill-desc">Representing organizations at networking events and maintaining stakeholder databases.</div>
+        </div>
+      </div>
+      <div class="skill-item reveal">
+        <span class="skill-mark">05</span>
+        <div>
+          <div class="skill-title">Customer Service</div>
+          <div class="skill-desc">Handling fast-paced, detail-heavy retail environments with reliability and professionalism.</div>
+        </div>
+      </div>
+      <div class="skill-item reveal">
+        <span class="skill-mark">06</span>
+        <div>
+          <div class="skill-title">Team Collaboration</div>
+          <div class="skill-desc">Working alongside staff, volunteers, and families to keep programs running smoothly.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">03</span>
+      <h2>Experience</h2>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-item current reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-dates">June 2026 — Present</div>
+        <div class="tl-role">Community Outreach Coordinator</div>
+        <div class="tl-org">Healthy Little Cooks</div>
+        <ul>
+          <li>Research prospective sponsors, community partners, and funding opportunities to support organizational growth.</li>
+          <li>Maintain stakeholder databases and conduct outreach to schools, nonprofits, businesses, and community organizations.</li>
+          <li>Represent the organization at networking events and cultivate relationships with community stakeholders.</li>
+          <li>Identify strategic opportunities to expand program visibility and impact.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item current reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-dates">April 2023 — Present</div>
+        <div class="tl-role">Junior Coach</div>
+        <div class="tl-org">The First Tee of Howard County</div>
+        <ul>
+          <li>Mentor youth participants and communicate program objectives to students and families.</li>
+          <li>Assist with instructional programming and day-to-day operations for clinics and events.</li>
+          <li>Collaborate with staff, volunteers, and parents to create a positive learning environment.</li>
+          <li>Develop leadership, communication, and problem-solving skills through direct participant engagement.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-dates">September 2024 — August 2025</div>
+        <div class="tl-role">Tournament Representative</div>
+        <div class="tl-org">The First Tee of Howard County</div>
+        <ul>
+          <li>Served as a youth ambassador at tournaments and community events, representing the organization's mission and values.</li>
+          <li>Coordinated with participants, volunteers, and event staff to support successful event operations.</li>
+          <li>Engaged with community members and stakeholders to promote programs and increase participant involvement.</li>
+          <li>Supported outreach efforts that strengthened community awareness and engagement.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-dates">October 2023 — May 2024</div>
+        <div class="tl-role">Sales Associate</div>
+        <div class="tl-org">Clarks Ace Hardware</div>
+        <ul>
+          <li>Delivered customer service and assisted customers in identifying products and solutions.</li>
+          <li>Managed multiple responsibilities in a fast-paced retail environment while maintaining accuracy and attention to detail.</li>
+          <li>Communicated effectively with customers and team members to support daily operations and resolve concerns.</li>
+          <li>Demonstrated reliability, professionalism, and strong interpersonal skills.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-num">04</span>
+      <h2>Education</h2>
+    </div>
+    <div class="edu-list">
+      <div class="edu-item reveal">
+        <div>
+          <div class="edu-school">The American University</div>
+          <div class="edu-loc">Washington, DC</div>
+        </div>
+        <div class="edu-date">Expected May 2030</div>
+      </div>
+      <div class="edu-item reveal">
+        <div>
+          <div class="edu-school">Marriotts Ridge High School</div>
+          <div class="edu-loc">Marriottsville, MD</div>
+        </div>
+        <div class="edu-date">May 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <div class="wrap contact-inner">
+    <div class="section-head reveal" style="margin-bottom:0;">
+      <span class="section-num">05</span>
+      <h2>Let's talk</h2>
+    </div>
+    <div class="contact-links reveal">
+      <a class="contact-link" href="mailto:swarakakaraparthy@gmail.com">
+        <span class="tag">EMAIL</span> swarakakaraparthy@gmail.com
+      </a>
+      <a class="contact-link" href="tel:4439789100">
+        <span class="tag">PHONE</span> 443-978-9100
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>© 2026 Swara Kakaraparthy</span>
+  <span>Marriottsville, MD</span>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
